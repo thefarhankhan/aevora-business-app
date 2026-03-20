@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { CartProvider } from '@/lib/cart-context'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
+import { CartDrawer } from '@/components/cart-drawer'
+import { WhatsAppButton } from '@/components/whatsapp-button'
 import './globals.css'
 
 const inter = Inter({ 
@@ -31,7 +36,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
-        {children}
+        <CartProvider>
+          <Header />
+          {children}
+          <Footer />
+          <CartDrawer />
+          <WhatsAppButton />
+        </CartProvider>
         <Analytics />
       </body>
     </html>
