@@ -7,6 +7,7 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { CartDrawer } from '@/components/cart-drawer'
 import { WhatsAppButton } from '@/components/whatsapp-button'
+import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
 
 const inter = Inter({ 
@@ -34,6 +35,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
@@ -47,6 +49,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
     </html>
   )
 }
