@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, use } from 'react'
+import { useState, use, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -11,6 +11,7 @@ import { useCart } from '@/lib/cart-context'
 import { products } from '@/lib/products'
 import { ProductCard } from '@/components/product-card'
 import { cn } from '@/lib/utils'
+import { trackAddToCart, trackProductView } from '@/lib/analytics'
 
 interface ProductPageProps {
   params: Promise<{ id: string }>
@@ -32,6 +33,10 @@ export default function ProductPage({ params }: ProductPageProps) {
   
   const { addToCart } = useCart()
 
+  useEffect(() => {
+    trackProductView(product)
+  }, [product])
+
   // Generate mock gallery images (in real app, these would come from product data)
   const galleryImages = [
     product.image,
@@ -45,6 +50,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     for (let i = 0; i < quantity; i++) {
       addToCart(product)
     }
+    trackAddToCart(product, quantity)
     setTimeout(() => setIsAdding(false), 1500)
   }
 

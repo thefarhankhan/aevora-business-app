@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,16 +9,25 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useCart } from '@/lib/cart-context'
+import { trackCheckout, trackPurchase } from '@/lib/analytics'
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart()
   const [step, setStep] = useState(1)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
+  const hasTrackedCheckout = useRef(false)
 
   const shipping = totalPrice >= 50 ? 0 : 5.99
   const tax = totalPrice * 0.08
   const total = totalPrice + shipping + tax
+
+  useEffect(() => {
+    if (items.length > 0 && !hasTrackedCheckout.current) {
+      trackCheckout(items, total)
+      hasTrackedCheckout.current = true
+    }
+  }, [items, total])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,6 +39,7 @@ export default function CheckoutPage() {
       await new Promise((resolve) => setTimeout(resolve, 2000))
       setIsProcessing(false)
       setIsComplete(true)
+      trackPurchase(items, total)
       clearCart()
     }
   }
