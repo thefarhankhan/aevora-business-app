@@ -1,63 +1,57 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { CartProvider } from '@/lib/cart-context'
-import { Header } from '@/components/header'
-import { Footer } from '@/components/footer'
-import { CartDrawer } from '@/components/cart-drawer'
-import { WhatsAppButton } from '@/components/whatsapp-button'
-import { GoogleTagManager } from '@next/third-parties/google'
-import Script from 'next/script'
-import './globals.css'
+import type { Metadata, Viewport } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { CartProvider } from "@/lib/cart-context";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { CartDrawer } from "@/components/cart-drawer";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { GoogleTagManager } from "@next/third-parties/google";
+import "./globals.css";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
-  variable: '--font-inter'
+  variable: "--font-inter",
 });
 
-const spaceGrotesk = Space_Grotesk({ 
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: '--font-space-grotesk'
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
-  title: 'Aevora Nutrition | Premium Protein & Supplements',
-  description: 'Fuel your fitness with Aevora Nutrition. Premium protein bars, protein powder, and creatine designed for peak performance.',
-  keywords: ['protein bars', 'protein powder', 'creatine', 'supplements', 'nutrition', 'fitness'],
-}
+  title: "Aevora Nutrition | Premium Protein & Supplements",
+  description:
+    "Fuel your fitness with Aevora Nutrition. Premium protein bars, protein powder, and creatine designed for peak performance.",
+  keywords: [
+    "protein bars",
+    "protein powder",
+    "creatine",
+    "supplements",
+    "nutrition",
+    "fitness",
+  ],
+};
 
 export const viewport: Viewport = {
-  themeColor: '#1a1a2e',
-}
+  themeColor: "#1a1a2e",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
-      <head>
-              {GA_MEASUREMENT_ID && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
-          />
-          <Script id="ga4-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}');
-            `}
-          </Script>
-        </>
-      )}
-      </head>
+    <html
+      lang="en"
+      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased">
+        {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
         <CartProvider>
           <Header />
           {children}
@@ -69,5 +63,5 @@ export default function RootLayout({
         <SpeedInsights />
       </body>
     </html>
-  )
+  );
 }

@@ -8,6 +8,7 @@ import { Star, Plus, Check, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCart, type Product } from '@/lib/cart-context'
 import { cn } from '@/lib/utils'
+import { trackAddToCart } from '@/lib/analytics'
 
 interface ProductCardProps {
   product: Product
@@ -21,6 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = () => {
     setIsAdding(true)
     addToCart(product)
+    trackAddToCart(product)
     setTimeout(() => setIsAdding(false), 1000)
   }
 
