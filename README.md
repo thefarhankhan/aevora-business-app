@@ -6,6 +6,8 @@ Next.js, Typescript
 
 Deployed: V0
 
+Live Link: https://aevora-business-app.vercel.app/
+
 ***Build and optimized using AI***
  
 
@@ -33,5 +35,11 @@ Deployed: V0
 | **Path exploration** | explore users path and journey        |
 | **Ecommerce**   | explore user engagements, and clicks         |
 ---
+
+## Screenshots
+<img width="545" height="332" alt="Screenshot 2026-09-05 214739" src="https://github.com/user-attachments/assets/5fad029f-e510-48cb-804f-92edf63d6ad2" />
+<img width="656" height="309" alt="Screenshot 2026-09-05 215051" src="https://github.com/user-attachments/assets/6ddcdeb8-02df-44da-9c69-fe515ba26c62" />
+<img width="1920" height="1080" alt="Screenshot (4)" src="https://github.com/user-attachments/assets/95e86fcc-e49a-4412-826b-fb4f6388bdaa" />
+
 
 
